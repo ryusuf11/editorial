@@ -8,7 +8,7 @@ import {
 } from 'slate-react';
 import { createEditor, Descendant } from 'slate';
 import { withHistory } from 'slate-history';
-import { Box } from '@chakra-ui/react';
+import { Box, VStack } from '@chakra-ui/react';
 import {
   FaAlignJustify,
   FaAlignRight,
@@ -65,32 +65,38 @@ const RichTextExample = () => {
 
   return (
     <Slate editor={editor} value={initialValue}>
-      <Box>
-        <FormatButton format="bold" icon={FaBold} />
-        <FormatButton format="italic" icon={FaItalic} />
-        <FormatButton format="underline" icon={FaUnderline} />
-        <AlignButton format="left" icon={FaAlignLeft} />
-        <AlignButton format="center" icon={FaAlignCenter} />
-        <AlignButton format="right" icon={FaAlignRight} />
-        <AlignButton format="justify" icon={FaAlignJustify} />
-      </Box>
-      <Box py={4} px={2} border="1px solid" borderColor="gray.200">
-        <Editable
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-          spellCheck
-          autoFocus
-          onKeyDown={(event) => {
-            if (!event.ctrlKey) {
-              return;
-            }
+      <VStack alignItems="flex-start">
+        <Box w="100%">
+          <FormatButton format="bold" icon={FaBold} tooltip="Ctrl + B" />
+          <FormatButton format="italic" icon={FaItalic} tooltip="Ctrl + I" />
+          <FormatButton
+            format="underline"
+            icon={FaUnderline}
+            tooltip="Ctrl + U"
+          />
+          <AlignButton format="left" icon={FaAlignLeft} />
+          <AlignButton format="center" icon={FaAlignCenter} />
+          <AlignButton format="right" icon={FaAlignRight} />
+          <AlignButton format="justify" icon={FaAlignJustify} />
+        </Box>
+        <Box py={4} px={2} border="1px solid" borderColor="gray.200" w="100%">
+          <Editable
+            renderElement={renderElement}
+            renderLeaf={renderLeaf}
+            spellCheck
+            autoFocus
+            onKeyDown={(event) => {
+              if (!event.ctrlKey) {
+                return;
+              }
 
-            if (event.key in hotkey) {
-              toggleMark(editor, hotkey[event.key] as MarkFormat);
-            }
-          }}
-        />
-      </Box>
+              if (event.key in hotkey) {
+                toggleMark(editor, hotkey[event.key] as MarkFormat);
+              }
+            }}
+          />
+        </Box>
+      </VStack>
     </Slate>
   );
 };

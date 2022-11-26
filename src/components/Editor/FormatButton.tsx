@@ -7,6 +7,7 @@ import { CustomEditor, MarkFormat } from './editorEntity';
 type FormatButtonProps = {
   format: MarkFormat;
   icon: IconType;
+  tooltip: string;
 };
 
 export const toggleMark = (editor: CustomEditor, format: MarkFormat) => {
@@ -24,10 +25,10 @@ export const isMarkActive = (editor: CustomEditor, format: MarkFormat) => {
   return marks ? marks[format] === true : false;
 };
 
-const FormatButton = ({ format, icon }: FormatButtonProps) => {
+const FormatButton = ({ format, icon, tooltip }: FormatButtonProps) => {
   const editor = useSlate();
   return (
-    <Tooltip label={format} placement="bottom">
+    <Tooltip label={`${format} (${tooltip})`} placement="bottom">
       <Button
         isActive={isMarkActive(editor, format)}
         onMouseDown={(event) => {
